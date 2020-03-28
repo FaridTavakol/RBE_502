@@ -1,0 +1,163 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Farid Tavakkolmoghaddam</title><meta name="generator" content="MATLAB 9.7"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2020-02-02"><meta name="DC.source" content="HW1_RBE502.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1>Farid Tavakkolmoghaddam</h1><p>HW1 Problem 1</p><pre class="codeinput">clear <span class="string">all</span>;
+k=10; <span class="comment">%stifness coefficient</span>
+l=2; <span class="comment">% initial length</span>
+m=5; <span class="comment">% mass</span>
+<span class="comment">% m2=5;</span>
+x=3.5; <span class="comment">% initial deflection of the spring</span>
+p=10; <span class="comment">% initial deflection angle of the spring</span>
+g=9.81; <span class="comment">% gravitational acceleration</span>
+y10=[p/360*2*pi 0 x 0]; <span class="comment">% Initial Conditions X=[ x1 x1' theta theta']</span>
+
+tspann=[linspace(0,40,201)];<span class="comment">% Duration</span>
+ f=@(t,y)[y(2) ; <span class="keyword">...</span>
+         (-2*m*(l+y(3))*y(4)*y(2)-m*g*(l+y(3))*sin(y(1)))/(m*(l+y(3))^2); <span class="keyword">...</span>
+        y(4) ; <span class="keyword">...</span>
+        (l+y(3)*m*y(2)^2+m*g*cos(y(1))-k*y(3))/m];
+
+[t,y]=ode45(f,tspann,y10);
+
+x2=(l+y(:,3)).*sin(y(:,1));
+y2=(l+y(:,3)).*cos(y(:,1));
+
+
+<span class="keyword">for</span> k=1:1:1
+    figure(1)
+<span class="keyword">for</span> i=1:1:length(t)
+    hold <span class="string">on</span>;
+    axis([-12 12 -12 12]);
+
+    title(<span class="string">'Spring Pendulum'</span>);
+    plot( [0 x2(i) ],-[0 y2(i)] ,<span class="string">'k -'</span>);
+
+    plot(x2(1:i),-y2(1:i),<span class="string">'b :'</span>);
+
+    plot(x2(i),-y2(i),<span class="string">'r o'</span>);<span class="comment">% massenpunkt m2</span>
+    plot([-5 5],[0 0],<span class="string">'k -'</span>);
+    plot(x2(i),-y2(i),<span class="string">'r o'</span>);
+    <span class="keyword">if</span> i==length(t)
+        <span class="keyword">break</span>
+    <span class="keyword">end</span>
+    drawnow;
+    clf;
+<span class="keyword">end</span>
+hold <span class="string">off</span>
+<span class="keyword">end</span>
+</pre><img vspace="5" hspace="5" src="HW1_RBE502_01.tif" alt=""> <p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2019b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% Farid Tavakkolmoghaddam
+% HW1 Problem 1
+clear all;
+k=10; %stifness coefficient
+l=2; % initial length
+m=5; % mass 
+% m2=5;
+x=3.5; % initial deflection of the spring  
+p=10; % initial deflection angle of the spring
+g=9.81; % gravitational acceleration
+y10=[p/360*2*pi 0 x 0]; % Initial Conditions X=[ x1 x1' theta theta']
+
+tspann=[linspace(0,40,201)];% Duration
+ f=@(t,y)[y(2) ; ...
+         (-2*m*(l+y(3))*y(4)*y(2)-m*g*(l+y(3))*sin(y(1)))/(m*(l+y(3))^2); ...
+        y(4) ; ...
+        (l+y(3)*m*y(2)^2+m*g*cos(y(1))-k*y(3))/m]; 
+
+[t,y]=ode45(f,tspann,y10);
+
+x2=(l+y(:,3)).*sin(y(:,1));
+y2=(l+y(:,3)).*cos(y(:,1));
+
+
+for k=1:1:1
+    figure(1)
+for i=1:1:length(t)
+    hold on;
+    axis([-12 12 -12 12]);
+   
+    title('Spring Pendulum');
+    plot( [0 x2(i) ],-[0 y2(i)] ,'k -');
+    
+    plot(x2(1:i),-y2(1:i),'b :');
+    
+    plot(x2(i),-y2(i),'r o');% massenpunkt m2
+    plot([-5 5],[0 0],'k -');
+    plot(x2(i),-y2(i),'r o');
+    if i==length(t)
+        break
+    end
+    drawnow;
+    clf;
+end
+hold off
+end
+
+##### SOURCE END #####
+--></body></html>
