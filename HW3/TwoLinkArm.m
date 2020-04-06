@@ -1,6 +1,6 @@
 %%Farid Tavakkolmoghaddam
 clc
-clear all;
+clear;
 close all;
 % the following parameters for the arm
 I1=10;  I2 = 10; m1=5; r1=.5; m2=5; r2=.5; l1=1; l2=1;
